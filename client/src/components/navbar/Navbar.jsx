@@ -2,21 +2,27 @@ import React, { useEffect, useState } from "react";
 import "./Navbar.scss";
 
 export default function Navbar() {
-
   const [active, setActive] = useState(false);
-  console.log(setActive)
+ // console.log(setActive);
+  const [open,setOpen]=useState(false)
 
-  const isActive = () =>
-  {
-    window.scrollY>0 ?setActive(true):setActive(false)
-    }
+  const isActive = () => {
+    window.scrollY > 0 ? setActive(true) : setActive(false);
+  };
 
   useEffect(() => {
-    window.addEventListener('scroll', isActive);
-      return () => {
-        window.removeEventListener('scroll',isActive)
-      }
-  },[])
+    window.addEventListener("scroll", isActive);
+    //cleanup function
+    return () => {
+      window.removeEventListener("scroll", isActive);
+    };
+  }, []);
+
+  const currentUser = {
+    id: 1,
+    userName: "Tharindu",
+    isSeller: true,
+  };
 
   return (
     <div className={active ? "navbar active" : "navbar"}>
@@ -33,7 +39,28 @@ export default function Navbar() {
           <span>Explore</span>
           <span>English</span>
           <span>Sign in</span>
-          <span>Become a Seller</span>
+          {!currentUser?.isSeller && <span>Become a Seller</span>}
+          {!currentUser && <button>Join</button>}
+          {currentUser && (
+            <div className="user" onClick={()=>setOpen(!open)}>
+              <img
+                src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-256.png"
+                alt=""
+              />
+              <span>{currentUser?.userName}</span>
+          { open &&   <div className="options">
+                {currentUser?.isSeller && (
+                  <>
+                    <span>Gigs</span>
+                    <span>Add New Gig</span>
+                  </>
+                )}
+                <span>Orders</span>
+                <span>Messages</span>
+                <span> Logout</span>
+              </div>}
+            </div>
+          )}
           <button>Join</button>
         </div>
       </div>

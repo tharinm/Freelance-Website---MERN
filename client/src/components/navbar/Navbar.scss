@@ -35,6 +35,38 @@
             gap:24px;
             font-weight: 500;
             font-family:'Montserrat',sans-serif;
+
+            .user {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                img{
+                    width:  32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+
+                .options{
+                     position: absolute;
+                     top: 50px;
+                    //  right: 20;
+                    //  left:30px;
+                     padding: 20px;
+                     background-color: white;
+                     border-radius: 10px;
+                     z-index: 999;
+                     border: 1px solid lightgrey;
+                     display: flex;
+                     flex-direction: column;
+                     gap: 10px;
+                     width: 150px;
+                     font-weight: 300;
+                     color: gray;
+
+                }
+            }
             button {
                     color: white;
                     padding: 10px 20px;
@@ -48,6 +80,7 @@
                         border-color: #1dbf73;
                     }
                 }
+
         }
     }
 
