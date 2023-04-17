@@ -3,4 +3,10 @@
         text-decoration: none;
         color:inherit
     }
+
+    // hide scroll bars
+    body::-webkit-scrollbar {
+     display: none;
+    }
+
 }
