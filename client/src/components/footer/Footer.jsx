@@ -35,8 +35,8 @@ export default function Footer() {
               <h2>Support</h2>
               <span>Help & Support</span>
               <span>Trust & Safety</span>
-              <span>Selling on Liverr</span>
-              <span>Buying on Liverr</span>
+              <span>Selling on Freelance</span>
+              <span>Buying on Freelance</span>
             </div>
             <div className="item">
               <h2>Community</h2>
@@ -54,14 +54,14 @@ export default function Footer() {
             </div>
             <div className="item">
               <h2>More From Fiverr</h2>
-              <span>Liverr Business</span>
-              <span>Liverr Pro</span>
-              <span>Liverr Logo Maker</span>
-              <span>Liverr Guides</span>
+              <span>Freelance Business</span>
+              <span>Freelance Pro</span>
+              <span>Freelance Logo Maker</span>
+              <span>Freelance Guides</span>
               <span>Get Inspired</span>
-              <span>Liverr Select</span>
+              <span>Freelance Select</span>
               <span>ClearVoice</span>
-              <span>Liverr Workspace</span>
+              <span>Freelance Workspace</span>
               <span>Learn</span>
               <span>Working Not Working</span>
             </div>
