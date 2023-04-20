@@ -1,7 +1,8 @@
-import e from "express";
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import userRoute from "./routes/user.route.js";
+import authRoute from "./routes/auth.route.js";
 
 //mongoose.set('strictQuery',true)
 const app = express();
@@ -15,6 +16,12 @@ const connect = async () => {
     console.log(error);
   }
 };
+
+//to read json files
+app.use(express.json());
+
+app.use("/api/auth", authRoute);
+app.use("/api/user", userRoute);
 
 app.listen(8000, () => {
   connect();
