@@ -5,18 +5,18 @@ import dotenv from "dotenv";
 
 //mongoose.set('strictQuery',true)
 const app = express();
-dotenv.config()
+dotenv.config();
 
-
-try {
-  await mongoose.connect(process.env.MONGO);
-  console.log("MongoDB connected");
-} catch (error) {
- console.log(error)
-}
-
-
+const connect = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO);
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 app.listen(8000, () => {
+  connect();
   console.log("Backend server is running!");
 });
