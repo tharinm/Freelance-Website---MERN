@@ -22,15 +22,12 @@ export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
 
-    
-
     if (!user) {
       return next(createError(400, "User not found"));
     }
 
     const isCorrect = bcrypt.compareSync(req.body.password, user.password);
-    if (!isCorrect)
-      return next(createError(400, "Passowrd not match"));
+    if (!isCorrect) return next(createError(400, "Passowrd not match"));
 
     const token = jwt.sign(
       {
@@ -43,13 +40,16 @@ export const login = async (req, res, next) => {
     const { password, ...info } = user._doc;
     res.cookie("accessToken", token, { httpOnly: true }).status(200).send(info);
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
 export const logout = async (req, res, next) => {
-  res.clearCookie("accessToken", {
-    sameSite: "none",
-    secure:true,
-  }).status(200).send("User has been logout")
+  res
+    .clearCookie("accessToken", {
+      sameSite: "none",
+      secure: true,
+    })
+    .status(200)
+    .send("User has been logout");
 };

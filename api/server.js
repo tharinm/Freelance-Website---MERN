@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import userRoute from "./routes/user.route.js";
 import authRoute from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 
 //mongoose.set('strictQuery',true)
@@ -20,8 +21,10 @@ const connect = async () => {
 };
 
 //to read json files
+app.use(cors({ origin: "http://127.0.0.1:5173", credentials: true }));
 app.use(express.json());
-app.use(cookieParser())
+
+app.use(cookieParser());
 
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
