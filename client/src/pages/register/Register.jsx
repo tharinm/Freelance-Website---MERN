@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import upload from "../../utils/upload";
 import "./Register.scss";
-import newRequest from "../../utils/newRequest.js"
+import newRequest from "../../utils/newRequest.js";
 import { Navigate, useNavigate } from "react-router-dom";
-
 
 function Register() {
   const [file, setFile] = useState(null);
@@ -16,8 +15,8 @@ function Register() {
     isSeller: false,
     desc: "",
   });
-    
-    console.log(user)
+
+  console.log(user);
 
   const navigate = useNavigate();
 
@@ -41,25 +40,11 @@ function Register() {
         ...user,
         img: url,
       });
-      navigate('/')
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
-    };
-    
-    // const upload = async (file) => {
-        // const data = new FormData();
-
-        // data.append("file", file);
-        // data.append("upload_preset", "freelancce");
-
-        // try {
-            // const res=await axios.post("https://api.cloudinary.com/v1_1/dspju8keb")
-        // }
-        // catch (err) {
-            // console.log(err)
-        // }
-    // }
+  };
 
   return (
     <div className="register">
