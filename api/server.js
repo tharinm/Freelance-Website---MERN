@@ -5,7 +5,7 @@ import userRoute from "./routes/user.route.js";
 import authRoute from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-
+import gigRoute from "./routes/gig.route.js";
 
 //mongoose.set('strictQuery',true)
 const app = express();
@@ -28,14 +28,14 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
+app.use("/api/gigs", gigRoute);
 
 app.use((err, req, res, next) => {
-  const errorStatus = err.status || 500
+  const errorStatus = err.status || 500;
   const errorMessage = err.message || "Something went wrong!";
 
-  return res.status(errorStatus).send(errorMessage)
-
-})
+  return res.status(errorStatus).send(errorMessage);
+});
 
 app.listen(8000, () => {
   connect();
