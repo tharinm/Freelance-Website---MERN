@@ -1,3 +1,4 @@
+import { json } from "express";
 import gigModel from "../models/gig.model.js";
 import createError from "../utils/createError.js";
 import jwt from "jsonwebtoken";
@@ -33,7 +34,35 @@ export const deleteGig = async (req, res, next) => {
   }
 };
 
-// export const getGig = () => {};
-//
-// export const getGigs = () => {};
-//
+export const getGig = async (req, res, next) => {
+  try {
+    const singleGig = await gigModel.findById(req.params.id);
+    if (!singleGig) {
+      return next(createError(404, "No Gig Found"));
+    }
+
+    return res.status(201).send(singleGig);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getGigs = async (req, res, next) => {
+  const q = req.query;
+  const filters = {
+    ...(q.userId && { userId: q.userId }),
+    ...(q.cat && { cat: q.cat }),
+      ...((q.min || q.max) && {
+        //search price between min mx
+      price: { ...(q.min && { $gt: q.min }), ...(q.max && { $lt: q.max }) },
+    }),
+    ...(q.search && { title: { $regex: q.search, $options: "i" } }),
+  };
+
+  try {
+    const getAllGigs = await gigModel.find(filters);
+    return res.status(200).send(getAllGigs);
+  } catch (err) {
+    console.log(err);
+  }
+};
