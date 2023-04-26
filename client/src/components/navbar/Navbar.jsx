@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.scss";
-import { Link, useLocation } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  json,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import newRequest from "../../utils/newRequest";
 
 export default function Navbar() {
   const [active, setActive] = useState(false);
   // console.log(setActive);
   const [open, setOpen] = useState(false);
 
-  const {pathname} =useLocation()
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const isActive = () => {
     window.scrollY > 0 ? setActive(true) : setActive(false);
@@ -21,10 +29,16 @@ export default function Navbar() {
     };
   }, []);
 
-  const currentUser = {
-    id: 1,
-    userName: "Tharindu",
-    isSeller: true,
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const handleLogout = async () => {
+    try {
+      await newRequest.post("auth/logout");
+      localStorage.setItem("currentUser", null);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -41,16 +55,24 @@ export default function Navbar() {
           <span>Explore Business</span>
           <span>Explore</span>
           <span>English</span>
-          <span>Sign in</span>
+          {!currentUser &&  (
+            <Link to="/login" className="link">
+              Sign In
+            </Link>
+          )}
+
           {!currentUser?.isSeller && <span>Become a Seller</span>}
-          {!currentUser && <button>Join</button>}
+          {!currentUser && (
+            
+              <Link className="link" to="/register">
+                <button>Join</button>
+              </Link>
+            
+          )}
           {currentUser && (
             <div className="user" onClick={() => setOpen(!open)}>
-              <img
-                src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-256.png"
-                alt=""
-              />
-              <span>{currentUser?.userName}</span>
+              <img src={currentUser.img || "img/man.png"} alt="" />
+              <span>{currentUser?.username}</span>
               {open && (
                 <div className="options">
                   {currentUser?.isSeller && (
@@ -69,14 +91,13 @@ export default function Navbar() {
                   <Link className="link" to="/messages">
                     Messages
                   </Link>
-                  <Link className="link" to="/">
+                  <Link className="link" to="/" onClick={handleLogout}>
                     Logout
                   </Link>
                 </div>
               )}
             </div>
           )}
-          <button>Join</button>
         </div>
       </div>
 
