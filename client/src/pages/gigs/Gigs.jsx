@@ -1,18 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Gigs.scss";
 import GigCard from "../../components/gigCard/GigCard";
-import { gigs } from "../../data";
+//import { gigs } from "../../data";
+import { useLocation } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import newRequest from "../../utils/newRequest";
 
 export default function Gigs() {
   const [open, setOpen] = useState(false);
   const [sort, setSort] = useState("sales");
+
+  const minRef = useRef();
+  const maxRef = useRef();
+
+  // for search filterin
+  const { search } = useLocation();
+  
+
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ["gigs"],
+    queryFn: () =>
+      //gigs filtering
+      newRequest
+        .get(
+          // `/gigs${search}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`// `gigs${search}`
+          `/gigs${search ? `${search}&` : "?"}min=${minRef.current.value}&max=${
+            maxRef.current.value
+          }&sort=${sort}`
+        )
+        .then((res) => {
+          return res.data;
+        }),
+  });
 
   const reSort = (type) => {
     setSort(type);
     setOpen(false);
   };
 
-  console.log(gigs);
+  const apply = () => {
+    // console.log(minRef.current.value);
+    // console.log(minRef.current.value);
+    refetch();
+  };
+
+  useEffect(() => {
+    refetch()
+  },[sort])
+
+  console.log(data);
+  //console.log(gigs);
 
   return (
     <div className="gigs">
@@ -26,9 +63,9 @@ export default function Gigs() {
         <div className="menu">
           <div className="left">
             <span className="budget">Budget</span>
-            <input type="text" placeholder="min" />
-            <input type="text" placeholder="max" />
-            <button>Apply</button>
+            <input type="text" placeholder="min" ref={minRef} />
+            <input type="text" placeholder="max" ref={maxRef} />
+            <button onClick={apply}>Apply</button>
           </div>
           <div className="right">
             <span className="sortBy">Sort by</span>
@@ -43,16 +80,19 @@ export default function Gigs() {
                 ) : (
                   <span onClick={() => reSort("sales")}>Best Selling</span>
                 )}
+                <span onClick={() => reSort("sales")}>Popular</span>
               </div>
             )}
           </div>
         </div>
         <div className="cards">
-          {gigs.map((gig) => {
-            return <GigCard item={gig} key={gig.id} />;
-          })}
-
-          <GigCard item={gigs[0]}/>
+          {isLoading
+            ? "loading"
+            : error
+            ? " something went wrong"
+            : data.map((gig) => {
+                return <GigCard item={gig} key={gig._id} />;
+              })}
         </div>
       </div>
     </div>

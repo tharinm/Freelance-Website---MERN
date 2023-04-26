@@ -16,14 +16,18 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const res = await newRequest.post("auth/login", { username, password });
+      const res = await newRequest.post(
+        "/auth/login",
+        { username, password },
+        { withCredentials: true }
+      );
 
-        //save in local storage
-        localStorage.setItem("currentUser", JSON.stringify(res.data))
-        navigate('/')
+      //save in local storage
+      localStorage.setItem("currentUser", JSON.stringify(res.data));
+      navigate("/");
     } catch (err) {
-        setError(err.response.data);
-       // console.log(err)
+      setError(err.response.data);
+      // console.log(err)
     }
   };
 

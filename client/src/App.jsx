@@ -13,14 +13,28 @@ import Message from "./pages/message/Message";
 import './App.scss'
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
 function App() {
+  
+  // Create a client
+  const queryClient = new QueryClient();
+
   const Layout = () => {
     return (
       <div className="app">
-        <Navbar />
-        <Outlet />
-        <Footer />
+        {/* Provide the client to your App */}
+        <QueryClientProvider client={queryClient}>
+          <Navbar />
+          <Outlet />
+          <Footer />
+        </QueryClientProvider>
       </div>
     );
   };
@@ -40,7 +54,7 @@ function App() {
         },
         {
           path: "/register",
-          element: <Register/>,
+          element: <Register />,
         },
         {
           path: "/gigs",
