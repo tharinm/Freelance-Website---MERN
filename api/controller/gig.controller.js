@@ -60,7 +60,7 @@ export const getGigs = async (req, res, next) => {
   };
 
   try {
-    const getAllGigs = await gigModel.find(filters);
+    const getAllGigs = await gigModel.find(filters).sort({[q.sort]:-1});
     return res.status(200).send(getAllGigs);
   } catch (err) {
     console.log(err);

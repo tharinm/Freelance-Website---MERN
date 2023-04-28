@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 
 export default function GigCard({ item }) {
-  console.log(item)
+  //console.log(item);
   const { isLoading, error, data } = useQuery({
     queryKey: [item.userId],
     queryFn: () =>
@@ -15,10 +15,10 @@ export default function GigCard({ item }) {
       }),
   });
 
- //console.log(data)
+  //console.log(data)
 
   return (
-    <Link to="/gig/123" className="link">
+    <Link to={`/gig/${item._id}`} className="link">
       <div className="gigCard">
         <img src={item.cover} alt="" />
         <div className="info">
@@ -28,7 +28,7 @@ export default function GigCard({ item }) {
             "Something error in gig"
           ) : (
             <div className="user">
-              <img src={data.img || 'img/man.png'} alt="" />
+              <img src={data.img || "img/man.png"} alt="" />
               <span>{data.username}</span>
             </div>
           )}
