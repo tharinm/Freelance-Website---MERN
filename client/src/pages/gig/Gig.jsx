@@ -19,7 +19,7 @@ export default function Gig() {
       }),
   });
 
-  console.log(data);
+  //console.log(data);
 
   const userId = data?.userId;
   //console.log(userId)
@@ -31,13 +31,13 @@ export default function Gig() {
   } = useQuery({
     queryKey: ["user"],
     queryFn: () =>
-      newRequest.get(`/user/${userId}`).then((res) => {
+      newRequest.get(`/user/${data.userId}`).then((res) => {
         return res.data;
       }),
     enabled: !!userId,
   });
   //
-  
+
   console.log(dataUser);
 
   return (
@@ -69,31 +69,60 @@ export default function Gig() {
                 <img src="/img/star.png" alt="" />
                 <img src="/img/star.png" alt="" />
                 <img src="/img/star.png" alt="" />
-                <span>5</span>
+                <span>
+                  <span>
+                    {!isNaN(data.totalStars / data.starNumber) &&
+                      Math.round(data.totalStars / data.starNumber)}
+                  </span>
+                </span>
               </div>
             </div>
-            {/* <Swiper className="mySwiper"> */}
-            {/* <SwiperSlide> */}
-            {/* {data.images.map((img) => { */}
-            {/* <img src={img} alt="" />; */}
-            {/* })} */}
-            {/* </SwiperSlide> */}
-            {/* </Swiper> */}
+            <Swiper className="mySwiper">
+              <SwiperSlide>
+                {data.images.map((img) => {
+                  <img src={img} alt="" />;
+                })}
+              </SwiperSlide>
+            </Swiper>
             <h2>About This Gig</h2>
             <p>{data.desc}</p>
             <div className="seller">
               <h2>About The Seller</h2>
+
               <div className="user">
-                {/* <img src={dataUser.img} alt="" /> */}
+                {isLoadingUser ? (
+                  "Loading"
+                ) : errorUser ? (
+                  "somethng went wrong"
+                ) : (
+                  <img src={dataUser.img || "/img/man.png"} alt="" />
+                )}
+
                 <div className="info">
-                  {/* <span>{dataUser.username}</span> */}
+                  {isLoadingUser ? (
+                    "Loading"
+                  ) : errorUser ? (
+                    "somethng went wrong"
+                  ) : (
+                    <span>{dataUser.username}</span>
+                  )}
+
                   <div className="stars">
-                    <img src="/img/star.png" alt="" />
-                    <img src="/img/star.png" alt="" />
-                    <img src="/img/star.png" alt="" />
-                    <img src="/img/star.png" alt="" />
-                    <img src="/img/star.png" alt="" />
-                    <span>5</span>
+                    <span>
+                      {!isNaN(data.totalStars / data.starNumber) && (
+                        <div className="stars">
+                          {Array(Math.round(data.totalStars / data.starNumber))
+                            //  The fill() method fills specified elements in an array with a value.
+                            .fill()
+                            .map((item, i) => (
+                              <img src="/img/star.png" alt="" key={i} />
+                            ))}
+                          <span>
+                            {Math.round(data.totalStars / data.starNumber)}
+                          </span>
+                        </div>
+                      )}
+                    </span>
                   </div>
                   <button>Contact Me</button>
                 </div>
@@ -102,7 +131,13 @@ export default function Gig() {
                 <div className="items">
                   <div className="item">
                     <span className="title">From</span>
-                    <span className="desc">USA</span>
+                    {isLoadingUser ? (
+                      "Loading"
+                    ) : errorUser ? (
+                      "somethng went wrong"
+                    ) : (
+                      <span className="desc">{dataUser.country}</span>
+                    )}
                   </div>
                   <div className="item">
                     <span className="title">Member since</span>
@@ -123,10 +158,13 @@ export default function Gig() {
                 </div>
                 <hr />
                 <p>
-                  My name is Anna, I enjoy creating AI generated art in my spare
-                  time. I have a lot of experience using the AI program and that
-                  means I know what to prompt the AI with to get a great and
-                  incredibly detailed result.
+                  {isLoadingUser ? (
+                    "Loading"
+                  ) : errorUser ? (
+                    "somethng went wrong"
+                  ) : (
+                    <span className="desc">{dataUser.desc}</span>
+                  )}
                 </p>
               </div>
             </div>
@@ -262,14 +300,14 @@ export default function Gig() {
           </div>
           <div className="right">
             <div className="price">
-              {/* <h3>{data.shortTitle}</h3> */}
-              {/* <h2>$ {data.price}</h2> */}
+              <h3>{data.shortTitle}</h3>
+              <h2>$ {data.price}</h2>
             </div>
             <p>{[data.shortDesc]}</p>
             <div className="details">
               <div className="item">
                 <img src="/img/clock.png" alt="" />
-                {/* <span>{data.deliveryDate}</span> */}
+                <span>{data.deliveryDate}</span>
               </div>
               <div className="item">
                 <img src="/img/recycle.png" alt="" />
@@ -277,12 +315,12 @@ export default function Gig() {
               </div>
             </div>
             <div className="features">
-              {/* {data.features.map((feature) => { */}
-              {/* <div className="item" key={feature}> */}
-              {/* <img src="/img/greencheck.png" alt="" /> */}
-              {/* <span>{feature}</span> */}
-              {/* </div>; */}
-              {/* })} */}
+              {data.features.map((feature) => {
+                <div className="item" key={feature}>
+                  <img src="/img/greencheck.png" alt="" />
+                  <span>{feature}</span>
+                </div>;
+              })}
             </div>
             <button>Continue</button>
           </div>

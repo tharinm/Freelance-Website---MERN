@@ -15,6 +15,9 @@ export default function GigCard({ item }) {
       }),
   });
 
+  console.log('.....')
+  console.log(item)
+
   //console.log(data)
 
   return (
@@ -35,7 +38,10 @@ export default function GigCard({ item }) {
           <p>{item.desc}</p>
           <div className="star">
             <img src="./img/star.png" alt="" />
-            <span>{item.star}</span>
+            <span>
+              {!isNaN(item.totalStars / item.starNumber) &&
+                Math.round(item.totalStars / item.starNumber)}
+            </span>
           </div>
         </div>
         <hr />
