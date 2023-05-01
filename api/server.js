@@ -6,6 +6,7 @@ import authRoute from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import gigRoute from "./routes/gig.route.js";
+import reviewRoute from "./routes/review.route.js";
 
 //mongoose.set('strictQuery',true)
 const app = express();
@@ -30,6 +31,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/gigs", gigRoute);
+app.use("/api/reviews", reviewRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
