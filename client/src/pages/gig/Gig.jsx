@@ -35,11 +35,12 @@ export default function Gig() {
       newRequest.get(`/user/${data.userId}`).then((res) => {
         return res.data;
       }),
+    //when run  only userId exist
     enabled: !!userId,
   });
   //
 
-  console.log(dataUser);
+  //console.log(dataUser);
 
   return (
     <div className="gig">
@@ -168,7 +169,8 @@ export default function Gig() {
                   )}
                 </p>
               </div>
-            </div>{" "}
+                </div>
+                
             <Reviews gigId={id} />
           </div>
 

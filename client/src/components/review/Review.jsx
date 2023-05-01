@@ -1,18 +1,42 @@
-import React from 'react'
-import './Review.scss'
+import React from "react";
+import "./Review.scss";
+import { useQuery } from "@tanstack/react-query";
+import newRequest from "../../utils/newRequest";
 
-export default function Review() {
+
+export default function Review({ review }) {
+  console.log(review);
+
+  const { isLoading:isLoadingUser, error:userError, data:userData } = useQuery({
+    queryKey: ["user"],
+    queryFn: () =>
+      newRequest.get(`/reviews/${review.userId}`).then((res) => {
+        return res.data;
+      }),
+  });
+
+  // console.log(userData)
   return (
-    <div className='review'>
+    <div className="review">
       <div className="item">
         <div className="user">
-          <img
-            className="pp"
-            src="https://images.pexels.com/photos/839586/pexels-photo-839586.jpeg?auto=compress&cs=tinysrgb&w=1600"
-            alt=""
-          />
+          {isLoadingUser ? (
+            "Loading"
+          ) : userError ? (
+            "Something error"
+          ) : (
+            <img className="pp" src={userData.img} alt="" />
+          )}
+
           <div className="info">
-            <span>Garner David</span>
+            {isLoadingUser ? (
+              "Loading"
+            ) : userError ? (
+              "Something error"
+            ) : (
+              <span>{userData.username}</span>
+            )}
+
             <div className="country">
               <img
                 src="https://fiverr-dev-res.cloudinary.com/general_assets/flags/1f1fa-1f1f8.png"
@@ -23,21 +47,15 @@ export default function Review() {
           </div>
         </div>
         <div className="stars">
-          <img src="/img/star.png" alt="" />
-          <img src="/img/star.png" alt="" />
-          <img src="/img/star.png" alt="" />
-          <img src="/img/star.png" alt="" />
-          <img src="/img/star.png" alt="" />
-          <span>5</span>
+          {Array(review.star)
+            .fill()
+            .map((item, i) => (
+              <img src="/img/star.png" alt="" key={i} />
+            ))}
+          <span>{ review.star}</span>
         </div>
-        <p>
-          I just want to say that art_with_ai was the first, and after this, the
-          only artist Ill be using on Fiverr. Communication was amazing, each
-          and every day he sent me images that I was free to request changes to.
-          They listened, understood, and delivered above and beyond my
-          expectations. I absolutely recommend this gig, and know already that
-          Ill be using it again very very soon
-        </p>
+
+        <p>{review.desc}</p>
         <div className="helpful">
           <span>Helpful?</span>
           <img src="/img/like.png" alt="" />
