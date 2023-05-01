@@ -1,18 +1,17 @@
-.orders{
+.orders {
     display: flex;
     justify-content: center;
-    
-    .container{
+
+    .container {
         width: 1400px;
         padding: 50px 0px;
 
-
-        .title{
+        .title {
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            button{
+            button {
                 background-color: #0d084d;
                 color: white;
                 font-weight: 500;
@@ -22,30 +21,34 @@
             }
         }
 
-        table{
+        table {
             width: 100%;
 
-            tr{
+            tr {
                 height: 50px;
 
-                th{
+                th {
                     text-align: left;
                 }
-                td{
-
-                    img{
+                td {
+                    img {
                         width: 50px;
                         height: 20px;
                         object-fit: cover;
                     }
 
-                    .delete{
+                    .delete {
                         width: 20px;
+                        cursor: pointer;
+                    }
+
+                    .message {
+                        width: 25px;
                         cursor: pointer;
                     }
                 }
 
-                &:nth-child(even){
+                &:nth-child(even) {
                     background-color: #1dbf730f;
                 }
             }
