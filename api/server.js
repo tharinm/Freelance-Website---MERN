@@ -8,7 +8,8 @@ import cors from "cors";
 import gigRoute from "./routes/gig.route.js";
 import reviewRoute from "./routes/review.route.js";
 import ordersRoute from './routes/order.route.js'
-
+import conversationRoute from './routes/conversation.route.js'
+import messageRoute from './routes/message.route.js'
 //mongoose.set('strictQuery',true)
 const app = express();
 dotenv.config();
@@ -33,7 +34,9 @@ app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/gigs", gigRoute);
 app.use("/api/reviews", reviewRoute);
-app.use("/api/orders",ordersRoute)
+app.use("/api/orders", ordersRoute)
+app.use("/api/conversation", conversationRoute)
+app.use("/api/messages",messageRoute)
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

@@ -4,7 +4,7 @@ import "./Gig.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Reviews from "../../components/reviews/Reviews";
 
 // Import Swiper styles
@@ -169,8 +169,8 @@ export default function Gig() {
                   )}
                 </p>
               </div>
-                </div>
-                
+            </div>
+
             <Reviews gigId={id} />
           </div>
 
@@ -198,7 +198,9 @@ export default function Gig() {
                 </div>;
               })}
             </div>
-            <button>Continue</button>
+            <Link to={`/pay/${id}`}>
+              <button>Continue</button>
+            </Link>
           </div>
         </div>
       )}

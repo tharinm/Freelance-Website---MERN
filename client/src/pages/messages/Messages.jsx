@@ -8,7 +8,7 @@ import moment from "moment";
 export default function Messages() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-  //console.log(currentUser)
+  // console.log(currentUser)
 
   const queryClient = useQueryClient();
 
@@ -63,7 +63,10 @@ export default function Messages() {
                   }
                   key={c.id}
                 >
-                  <td>{currentUser.isSeller ? c.sellerId : c.buyerId}</td>
+                  <td>
+                    {" "}
+                    <td>{currentUser.isSeller ? c.buyerId : c.sellerId}</td>
+                  </td>
                   <td>
                     <Link to={`/message/${c.id}`} className="link">
                       {c?.lastMessage?.substring(0, 100)}...
