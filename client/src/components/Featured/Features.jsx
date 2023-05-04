@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Features.scss";
 
 export default function Features() {
+  const [input, setInput] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    navigate(`/gigs?search=${input}`);
+    console.log(input);
+  };
+
   return (
     <div className="featured">
       <div className="container">
@@ -13,9 +22,15 @@ export default function Features() {
           <div className="search">
             <div className="searchInput">
               <img src="./img/search.png" alt="" />
-              <input type="text" placeholder="Find Service" />
+              <input
+                type="text"
+                placeholder="Find Service"
+                onChange={(e) => {
+                  setInput(e.target.value);
+                }}
+              />
             </div>
-            <button>Search</button>
+            <button onClick={handleSearch}>Search</button>
           </div>
           <div className=" popular">
             <span>Popular:</span>

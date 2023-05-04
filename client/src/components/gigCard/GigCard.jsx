@@ -35,6 +35,7 @@ export default function GigCard({ item }) {
               <span>{data.username}</span>
             </div>
           )}
+          <p style={{fontWeight:'bold'}}>{item.title }</p>
           <p>{item.desc}</p>
           <div className="star">
             <img src="./img/star.png" alt="" />
