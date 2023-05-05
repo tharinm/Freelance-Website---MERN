@@ -1,41 +1,73 @@
-.add{
+.add {
     display: flex;
     justify-content: center;
 
-    .container{
+    .container {
         width: 1400px;
         padding: 50px 0px;
 
-
-        h1{
+        h1 {
             color: gray;
             font-weight: 300;
             margin-bottom: 30px;
         }
 
-        .sections{
-              display: flex;
-                justify-content: space-between;
-                gap:100px;
+        .sections {
+            display: flex;
+            justify-content: space-between;
+            gap: 100px;
 
-           .left , .right{
+            .left,
+            .right {
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
-                flex:1;
+                flex: 1;
                 justify-content: space-between;
 
-                label{
+                .images {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                label {
                     color: gray;
                     font-size: 18px;
                 }
 
-                input,select,textarea{
-                        padding: 20px;
+                input,
+                select,
+                textarea {
+                    padding: 20px;
                 }
 
-                button{
-                    border:none;
+                .add {
+                    display: flex;
+                    gap: 20px;
+                    justify-content: space-between;
+
+                    .addedFeatures {
+                        display: flex;
+                        gap: 20px;
+
+                        button {
+                            background-color: red;
+                            height: 20px;
+                            display: flex;
+                            align-items: center;
+                            font-size: 13px;
+
+                            span{
+                                margin-left: 10px;
+                            }
+                        }
+                    }
+                }
+
+                button {
+                    border: none;
+
                     padding: 20px;
                     background-color: #0d084d;
                     cursor: pointer;
@@ -43,10 +75,7 @@
                     font-weight: 500;
                     font-size: 18px;
                 }
-           }
-          
-
-          
+            }
         }
     }
 }
