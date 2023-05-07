@@ -19,6 +19,13 @@ export default function MyGigs() {
          return res.data;
        }),
    });
+  // const { isLoading, error, data } = useQuery({
+    // queryKey: ["mygigs"],
+    // queryFn: () =>
+      // newRequest.get(`/gigs/mygigs`).then((res) => {
+        // return res.data;
+      // }),
+  // });
   
    const mutation = useMutation({
      mutationFn: (id) => {

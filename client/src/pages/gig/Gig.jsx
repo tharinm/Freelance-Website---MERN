@@ -20,7 +20,7 @@ export default function Gig() {
       }),
   });
 
-  //console.log(data);
+  console.log(data.features);
 
   const userId = data?.userId;
   //console.log(userId)
@@ -40,7 +40,7 @@ export default function Gig() {
   });
   //
 
-  //console.log(dataUser);
+// console.log(data.features);
 
   return (
     <div className="gig">
@@ -192,10 +192,11 @@ export default function Gig() {
             </div>
             <div className="features">
               {data.features.map((feature) => {
-                <div className="item" key={feature}>
+                
+                return(<div className="item" key={feature}>
                   <img src="/img/greencheck.png" alt="" />
                   <span>{feature}</span>
-                </div>;
+                </div>);
               })}
             </div>
             <Link to={`/pay/${id}`}>

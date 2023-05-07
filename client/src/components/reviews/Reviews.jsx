@@ -40,8 +40,8 @@ export default function Reviews({ gigId }) {
     }
   };
 
-  console.log(gigId);
-  console.log(data);
+  // console.log(gigId);
+  // console.log(data);
 
   return (
     <div>

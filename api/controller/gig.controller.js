@@ -52,17 +52,26 @@ export const getGigs = async (req, res, next) => {
   const filters = {
     ...(q.userId && { userId: q.userId }),
     ...(q.cat && { cat: q.cat }),
-      ...((q.min || q.max) && {
-        //search price between min mx
+    ...((q.min || q.max) && {
+      //search price between min mx
       price: { ...(q.min && { $gt: q.min }), ...(q.max && { $lt: q.max }) },
     }),
     ...(q.search && { title: { $regex: q.search, $options: "i" } }),
   };
 
   try {
-    const getAllGigs = await gigModel.find(filters).sort({[q.sort]:-1});
+    const getAllGigs = await gigModel.find(filters).sort({ [q.sort]: -1 });
     return res.status(200).send(getAllGigs);
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const mygigs = async (req, res, next) => {
+  try {
+    const findGig = await gigModel.find({ userId: req.userId });
+    return res.status(200).send(findGig);
+  } catch (error) {
+    next(error);
   }
 };
