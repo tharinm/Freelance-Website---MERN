@@ -7,14 +7,11 @@ import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
 
 export default function Add() {
-  const queryClient = useQueryClient();
-  const [singlefile, setSingleFile] = useState(undefined);
+  const [singleFile, setSingleFile] = useState(undefined);
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
 
   const [state, dispatch] = useReducer(gigReducer, INITIAL_STATE);
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     dispatch({
@@ -22,19 +19,19 @@ export default function Add() {
       payload: { name: e.target.name, value: e.target.value },
     });
   };
-
-  const handleFeatures = (e) => {
+  const handleFeature = (e) => {
     e.preventDefault();
-    dispatch({ type: "ADD_FEATURE", payload: e.target[0].value });
+    dispatch({
+      type: "ADD_FEATURE",
+      payload: e.target[0].value,
+    });
     e.target[0].value = "";
   };
 
-  //console.log(state.features);
-  //file upload
   const handleUpload = async () => {
     setUploading(true);
     try {
-      const cover = await upload(singlefile);
+      const cover = await upload(singleFile);
 
       const images = await Promise.all(
         [...files].map(async (file) => {
@@ -43,32 +40,32 @@ export default function Add() {
         })
       );
       setUploading(false);
-      dispatch({ type: "ADD_FEATURE", payload: { cover, images } });
+      dispatch({ type: "ADD_IMAGES", payload: { cover, images } });
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log(state);
+  const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: (gig) => {
-      return newRequest.post("/gigs/", gig);
+      return newRequest.post("/gigs", gig);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["myGig"]);
-    },
-    onError: (error) => {
-      //toast.error(error);
-      alert(`An error occurred: ${error.message}`);
+      queryClient.invalidateQueries(["myGigs"]);
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     mutation.mutate(state);
-    //navigate("/mygigs");
+    navigate("/mygigs");
   };
+
+  console.log(state);
 
   return (
     <div>
@@ -122,7 +119,7 @@ export default function Add() {
                 placeholder="Breifly explain your gig"
                 onChange={handleChange}
               ></textarea>
-              <button onChange={handleSubmit}>Create</button>
+              <button onClick={handleSubmit}>Create</button>
             </div>
             <div className="right">
               <label htmlFor="">Service Title</label>
@@ -130,7 +127,7 @@ export default function Add() {
                 type="text"
                 placeholder="e.g One Page Web Design"
                 onChange={handleChange}
-                name=" shortTitle"
+                name="shortTitle"
               />
               <label htmlFor="">Short Description</label>
               <textarea
@@ -156,7 +153,7 @@ export default function Add() {
                 name="revisionNumber"
               />
               <label htmlFor="">Add Features</label>
-              <form action="" onSubmit={handleFeatures}>
+              <form action="" onSubmit={handleFeature}>
                 <input type="text" placeholder="e.g page Design" />
                 <button type="submit">Add</button>
               </form>
@@ -180,7 +177,12 @@ export default function Add() {
               </div>
 
               <label htmlFor="">Price</label>
-              <input type="number" min={1} name="price" />
+              <input
+                type="number"
+                min={1}
+                name="price"
+                onChange={handleChange}
+              />
             </div>
           </div>
         </div>
